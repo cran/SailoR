@@ -1,0 +1,4 @@
+export(SailoR.Indices, SailoR.Plot, SailoR.Table, UVError)
+importFrom("grDevices", "col2rgb", "recordPlot", "rgb")
+importFrom("graphics", "abline", "grid", "legend", "lines", "plot","points")
+importFrom("stats", "na.omit", "prcomp", "sd")
