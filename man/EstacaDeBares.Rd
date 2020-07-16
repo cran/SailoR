@@ -27,16 +27,20 @@ The results from the statistical methods were obtained by the authors in previou
 }
 
 \references{
-G. Ibarra-Berastegi, J. Sáenz, G. Esnaola, A. Ezcurra and A. Ulazia (2015) Short-term forecasting of the wave energy flux: Analogues, random forests, and physics-based models. Ocean Engineering, 104:530-539, doi: \url{https://doi.org/10.1016/j.oceaneng.2015.05.038}
+G. Ibarra-Berastegi, J. Sáenz, G. Esnaola, A. Ezcurra and A. Ulazia (2015) Short-term forecasting of the wave energy flux: Analogues, random forests, and physics-based models. Ocean Engineering, 104:530-539, doi: \url{https://doi.org/10.1016/j.oceaneng.2015.05.038}.
 
-G. Ibarra-Berastegi, J. Sáenz, G. Esnaola, A. Ezcurra, A. Ulazia, N. Rojo and G. Gallastegui (2016) Wave Energy Forecasting at Three Coastal Buoys in the Bay of Biscay IEEE JOURNAL OF OCEANIC ENGINEERING, 41:923-929, doi: \url{https://doi.org/10.1109/JOE.2016.2529400}
+G. Ibarra-Berastegi, J. Sáenz, G. Esnaola, A. Ezcurra, A. Ulazia, N. Rojo and G. Gallastegui (2016) Wave Energy Forecasting at Three Coastal Buoys in the Bay of Biscay IEEE JOURNAL OF OCEANIC ENGINEERING, 41:923-929, doi: \url{https://doi.org/10.1109/JOE.2016.2529400}.
 }
 
 \examples{
+#--------------------------------------------------------
+# Example 1
+#--------------------------------------------------------
+
 # Load the data
 data(EstacaDeBares)
 
-#Parameters
+# Parameters
 Uxlim=c(0,25)
 Uylim=c(0,25)
 Uxlab<-" "
@@ -47,14 +51,15 @@ plotRMSE<-TRUE
 ref<-EstacaDeBares[["ref"]][,c("mod","U","V")]
 mod<-EstacaDeBares[["mod"]][,c("mod","U","V")]
   
-#Index
+# Index
 SailoR.Indices(ref,mod)
-  
-
+ 
+# Plot 
 SailoR.Plot(ref, mod, ColourList=NULL, sfactor, docenter=TRUE,
             Uxlim, Uylim, Uxlab, Uylab, plotmain, plotlegend=TRUE,
-            plotRMSElegend=TRUE, RMSE_legend_Rounding=0, 
-            RMSE_legend_units=" W/m", referenceName="Buoy")
+            plotRMSElegend=TRUE, plotscalelegend=TRUE, 
+            RMSE_legend_Rounding=0,RMSE_legend_units = " W/m",
+            referenceName="Buoy")
 
 }
 \keyword{Datasets}

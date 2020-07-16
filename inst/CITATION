@@ -1,0 +1,14 @@
+citHeader("To cite SailoR in publications, please use:")
+
+citEntry(entry = "article",
+  author = "J. Sáenz and S. Carreno-Madinabeitia and G. Esnaola and S. J. González-Rojí and G. Ibarra-Berastegi and A. Ulazia.",
+  title = "The Sailor diagram -- A new diagram for the verification of two-dimensional vector data from multiple models",
+  journal = "Geoscientific Model Development",
+  year = "2020",
+  Volume = "13",
+  Number = "7",
+  pages = "3221--3240",
+  url = "https://gmd.copernicus.org/articles/13/3221/2020/",
+  doi = "10.5194/gmd-13-3221-2020", 
+  textVersion = "J. Sáenz, S. Carreno-Madinabeitia, G. Esnaola, S.J. González-Rojí, G. Ibarra-Berastegi and A. Ulazia. The Sailor diagram - A new diagram for the verification of two-dimensional vector data from multiple models. Geoscientific Model Development, volume 13(7), pages 3221-3240, 2020."
+)

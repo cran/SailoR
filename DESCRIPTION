@@ -2,8 +2,8 @@ Package: SailoR
 Type: Package
 Title: An Extension of the Taylor Diagram to Two-Dimensional Vector
         Data
-Version: 1.0
-Date: 2019-10-09
+Version: 1.1.2
+Date: 2020-07-16
 Authors@R: 
     c(person(given = "Jon",
              family = "Sáenz",
@@ -46,5 +46,5 @@ License: GPL-3
 Repository: CRAN
 Encoding: UTF-8
 NeedsCompilation: no
-Packaged: 2019-10-10 12:05:37 UTC; Santitxu
-Date/Publication: 2019-10-11 11:40:05 UTC
+Packaged: 2020-07-16 20:19:50 UTC; Santitxu
+Date/Publication: 2020-07-16 21:40:03 UTC

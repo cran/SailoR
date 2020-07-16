@@ -10,7 +10,8 @@ function(ref,mod,Ensembles=FALSE){
     #$result: a data.frame with columns "meanU","meanV","RMSE",
     #"sdUx","sdUy","sdVx","sdVy","Eu","Ev",
     #"Sigmau","Sigmav","TotVarU","TotVarV","thetau","thetav",
-    #"thetavu","R2vec","Rvu"
+    #"thetavu","R2vec","Rvu","EccentricityU",
+    #"EccentricityV","congruenceEOF"
     #With names as described in UVError() output
   
     #Transformation data and check col dimension if Ensembles is FALSE
@@ -58,7 +59,8 @@ function(ref,mod,Ensembles=FALSE){
       for(ii in 1:length(UV)){
         l[[ii]]<-UV[[ii]][c("meanU","meanV","RMSE","sdUx","sdUy","sdVx","sdVy","Eu","Ev",
                             "Sigmau","Sigmav","TotVarU","TotVarV","thetau","thetav",
-                            "thetavu","R2vec","Rvu")]
+                            "thetavu","R2vec","Rvu","EccentricityU",
+                            "EccentricityV","congruenceEOF")]
       }
       names(l)<-names(UV)
       return (l)

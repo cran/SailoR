@@ -27,25 +27,31 @@ The in-situ data belong to the Basque Meteorological Agency EUSKALMET and were d
 }
 
 \examples{
+#--------------------------------------------------------
+# Example 1: Figure 6 (left) from Sáenz et al. (2020)
+#--------------------------------------------------------
+
 # Load the data
 data(Current)
 
-#Parameters
+# Parameters
 Uxlim=c(-0.5,0.5)
 Uylim=c(-0.5,0.5)
-Uxlab<-"m/s"
-Uylab<-"m/s"
+Uxlab<-"Ux (m/s)"
+Uylab<-"Uy (m/s)"
 plotmain<-"Surface current"
 sfactor<-4
 ref<-Current[["ref"]]
 mod<-Current[["mod"]]
   
-#Index
+# Index
 SailoR.Indices(ref,mod)
-  
+
+# Plot
 SailoR.Plot(ref, mod, ColourList=NULL, sfactor, docenter=TRUE,
             Uxlim, Uylim, Uxlab, Uylab, plotmain, plotlegend=TRUE,
-            plotRMSElegend=TRUE, RMSE_legend_Rounding=2,
-            RMSE_legend_units=" m/s", referenceName="Buoy")
+            plotRMSElegend=TRUE, plotscalelegend=TRUE,
+            RMSE_legend_Rounding=2, RMSE_legend_units = " m/s",
+            referenceName="Buoy")
 }
 \keyword{Datasets}

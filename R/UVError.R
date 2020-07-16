@@ -25,6 +25,9 @@ function(U,V,Ensembles=FALSE){
   #$thetavu: Rotation angle from U EOFs to V EOFs
   #$RMSE: Rootmean square error between U and V
   #$Rvc2: vector correlation squared in 2D.(Breaker, Gemmill, Crossby, 1994, J. App. Met.)
+  #$EccentricityU: eccentricity of the ellipses from the reference dataset
+  #$EccentricityV: eccentricity of the ellipses from the model dataset
+  #$congruenceEOF: Congruence coefficient (absolute value) for EOF1
   #doi: https://doi.org/10.1175/1520-0450(1994)033<1354:TAOATF>2.0.CO;2
   #following R vector correlation squared from CCA (Crossby et. al 1993, J. Atmos. Ocean. Tech. vol10)
   
@@ -51,11 +54,7 @@ function(U,V,Ensembles=FALSE){
   
   # Mean values
   meanU=colMeans(U)
-  sdUx=sd(U[,1])
-  sdUy=sd(U[,2])
   meanV=colMeans(V)
-  sdVx=sd(V[,1])
-  sdVy=sd(V[,2])
   
   # Reformat means to a full matrix
   muU=matrix(rep(meanU,N),nrow=N,byrow=TRUE)
@@ -68,6 +67,13 @@ function(U,V,Ensembles=FALSE){
   # Principal components
   pcaU=prcomp(Uanom)
   pcaV=prcomp(Vanom)
+
+  # Standard deviations of original data
+  sdUx=sd(U[,1])
+  sdUy=sd(U[,2])
+  sdVx=sd(V[,1])
+  sdVy=sd(V[,2])
+
   
   # Prepare decomposition matrices from PCA results
   Sigmau=matrix(rep(0,4),nrow=2)
@@ -76,6 +82,10 @@ function(U,V,Ensembles=FALSE){
   diag(Sigmav)=pcaV$sdev
   TotVarU=sum(diag(Sigmau)*diag(Sigmau))
   TotVarV=sum(diag(Sigmav)*diag(Sigmav))
+  # Eccentricities of ellipses
+  EccentricityU=sqrt(1.-Sigmau[2,2]**2/Sigmau[1,1]**2)
+  EccentricityV=sqrt(1.-Sigmav[2,2]**2/Sigmav[1,1]**2)
+
   
   # Principal components
   Pu=pcaU$x
@@ -89,6 +99,11 @@ function(U,V,Ensembles=FALSE){
   Ru=matrix(c(cos(thetau),sin(thetau),-sin(thetau),cos(thetau)),nrow=2)
   thetav=atan2(Ev[2,1],Ev[1,1])
   Rv=matrix(c(cos(thetav),sin(thetav),-sin(thetav),cos(thetav)),nrow=2)
+  # Congruence coefficient
+  e1u=Eu[,1]
+  e1v=Ev[,1]
+  congruenceEOF=abs(sum(e1u*e1v))
+
   # Rotation matrix
   Rvu=Ev%*%t(Eu)
   thetavu=atan2(Rvu[2,1],Rvu[1,1])
@@ -174,5 +189,6 @@ function(U,V,Ensembles=FALSE){
               Sigmau=Sigmau,Sigmav=Sigmav,
               sdUx=sdUx,sdUy=sdUy,sdVx=sdVx,sdVy=sdVy,
               thetau=thetau,thetav=thetav,thetavu=thetavu,
-              RMSE=RMSE,R2vec=R2vec))
+              RMSE=RMSE,R2vec=R2vec,EccentricityU=EccentricityU,
+	      EccentricityV=EccentricityV,congruenceEOF=congruenceEOF))
   }

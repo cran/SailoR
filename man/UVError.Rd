@@ -2,7 +2,8 @@
 \alias{UVError}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Calculation of the elements of the 2D MSE terms}
+Calculation of the elements of the 2D MSE terms
+}
 \description{
 This function calculates the different terms in the 2D MSE equation, the rotation of EOFs and so on for a unique given model. This function is internally used by \code{SailoR.Indices()} and external users are not expected to use it.
 }
@@ -39,19 +40,25 @@ The result is a list with a summary of the statistics obtained:
 \item{thetav}{angle of EOF1 (V) with meridional axis.}
 \item{thetavu}{rotation angle from U EOFs to V EOFs.}
 \item{RMSE}{root mean square error between U and V.}
-\item{R2vec}{vector correlation squared in 2D as defined by Breaker, Gemmill and Crossby (1994)}
+\item{R2vec}{vector correlation squared in 2D as defined by Breaker, Gemmill and Crossby (1994).}
+\item{EccentricityU}{eccentricity of the ellipses from the reference dataset.}
+\item{EccentricityV}{eccentricity of the ellipses from the model dataset.}
+\item{congruenceEOF}{congruence coefficients (absolute value) for EOFs.}
+
 }
+
 \references{
-Breaker, L. C., Gemmill, W. H., & Crosby, D. S. (1994). The application of a technique for vector correlation to problems in meteorology and oceanography. Journal of Applied Meteorology, 33(11), 1354-1365. doi: \url{https://doi.org/10.1175/1520-0450(1994)033<1354:TAOATF>2.0.CO;2}
+L. C. Breaker, W. H. Gemmill, and D. S. Crosby (1994). The application of a technique for vector correlation to problems in meteorology and oceanography. Journal of Applied Meteorology, 33(11), 1354-1365.
 }
+
 \seealso{
  \code{\link{SailoR.Indices}}
 }
+
 \examples{
-# Load the Vertically Integrated Water Vapor Transport Data included in the package
-data("WRF")
-# No further examples are given as external users are not expected to use it
+# No examples are given as external users are not expected to use it
 }
+
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{Functions}% use one of  RShowDoc("KEYWORDS")

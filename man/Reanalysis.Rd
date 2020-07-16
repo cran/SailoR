@@ -27,51 +27,61 @@ Contains the information of both components of monthly averaged surface wind in 
 # Load the data
 data(Reanalysis)
 
-#Parameters
-Uxlim=c(-1,1)
-Uylim=c(-1,1)
-Uxlab<-"U (m/s)"
-Uylab<-"V (m/s)"
+# Parameters
+Uxlim=c(-0.5,1)
+Uylim=c(-1,0.5)
+Uxlab<-"Ux (m/s)"
+Uylab<-"Uy (m/s)"
 plotmain<-"Reanalyses"
-sfactor<-0.2
+sfactor<-0.15
 
-#Create ref, mod objects
+# Create ref, mod objects
 
 weightWithLat=TRUE
 
 if(weightWithLat){
-    dlats=as.numeric(Reanalysis[["ref"]][,2])
-    rlats=pi*dlats/180.
-    lweights=sqrt(cos(rlats))
+  dlats=as.numeric(Reanalysis[["ref"]][,2])
+  rlats=pi*dlats/180.
+  lweights=sqrt(cos(rlats))
 
-    ref<-data.frame(Reanalysis[["ref"]][,3],
-                      lweights*as.numeric(Reanalysis[["ref"]][,4]),
-                      lweights*as.numeric(Reanalysis[["ref"]][,5]))
+  ref<-data.frame(Reanalysis[["ref"]][,3],
+                  lweights*as.numeric(Reanalysis[["ref"]][,4]),
+                  lweights*as.numeric(Reanalysis[["ref"]][,5]))
 }else{
 
-    ref<-data.frame(Reanalysis[["ref"]][,3],
-                      as.numeric(Reanalysis[["ref"]][,4]),
-                      as.numeric(Reanalysis[["ref"]][,5]))
+  ref<-data.frame(Reanalysis[["ref"]][,3],
+                  as.numeric(Reanalysis[["ref"]][,4]),
+                  as.numeric(Reanalysis[["ref"]][,5]))
 
 }
 names(ref)<-c("mod","U","V")
 
 mod<-data.frame(Reanalysis[["mod"]][,3],
-                  as.numeric(Reanalysis[["mod"]][,4]),
-                  as.numeric(Reanalysis[["mod"]][,5]))
+                as.numeric(Reanalysis[["mod"]][,4]),
+                as.numeric(Reanalysis[["mod"]][,5]))
 names(mod)<-c("mod","U","V")
   
-#Sailor
+# Sailors
+
+#--------------------------------------------------------
+# Example 1: Figure 7 (left) from Sáenz et al. (2020)
+#--------------------------------------------------------
+
+SailoR.Plot(ref, mod, ColourList=NULL, sfactor, docenter=FALSE,
+            Uxlim, Uylim, Uxlab, Uylab, plotmain, plotlegend=TRUE,
+            plotRMSElegend=TRUE, plotscalelegend=TRUE,
+            RMSE_legend_Rounding=1, RMSE_legend_units = " m/s",
+            referenceName="ERA5")
+
+#--------------------------------------------------------
+# Example 2: Figure 7 (right) from Sáenz et al. (2020)
+#--------------------------------------------------------
 
 SailoR.Plot(ref, mod, ColourList=NULL, sfactor, docenter=TRUE,
-              Uxlim, Uylim, Uxlab, Uylab, plotmain, plotlegend=TRUE,
-              plotRMSElegend=TRUE, RMSE_legend_Rounding=1,
-              RMSE_legend_units = " m/s", referenceName="ERA5")
-
-
-SailoR.Plot(ref, mod, ColourList=NULL, sfactor, docenter=TRUE,
-              Uxlim, Uylim, Uxlab, Uylab, plotmain, plotlegend=TRUE,
-              plotRMSElegend=TRUE)
+            Uxlim, Uylim, Uxlab, Uylab, plotmain, plotlegend=TRUE,
+            plotRMSElegend=TRUE, plotscalelegend=TRUE,
+            RMSE_legend_Rounding=1, RMSE_legend_units = " m/s",
+            referenceName="ERA5")
   
 }
 \keyword{Datasets}

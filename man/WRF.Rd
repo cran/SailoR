@@ -26,15 +26,19 @@ Contains the information of both components of the vertically integrated water v
 Both downscaling experiments were created by the authors in previous studies. ERA-Interim were retrieved from the MARS repository at ECMWF.  
 }
 \references{
-S.J. González-Rojí, J. Sáenz, G. Ibarra-Berastegi and J. Díaz-Argandoña (2018) Moisture balance over the Iberian Peninsula according to a regional climate model. The impact of 3DVAR data assimilation. Journal of Geophysical Research-Atmospheres, 123:708-729, doi: \url{https://doi.org/10.1002/2017JD027511}
+S. J. González-Rojí, J. Sáenz, G. Ibarra-Berastegi and J. Díaz-Argandoña (2018) Moisture balance over the Iberian Peninsula according to a regional climate model. The impact of 3DVAR data assimilation. Journal of Geophysical Research-Atmospheres, 123:708-729, doi: \url{https://doi.org/10.1002/2017JD027511}
 
-S.J. González-Rojí, R. L. Wilby, J. Sáenz and G. Ibarra-Berastegi (2019) Harmonized evaluation of daily precipitation downscaled using SDSM and WRF+WRFDA models over the Iberian Peninsula Climate Dynamics, 53:1413-1433, doi: \url{https://doi.org/10.1007/s00382-019-04673-9}
+S. J. González-Rojí, R. L. Wilby, J. Sáenz and G. Ibarra-Berastegi (2019) Harmonized evaluation of daily precipitation downscaled using SDSM and WRF+WRFDA models over the Iberian Peninsula Climate Dynamics, 53:1413-1433, doi: \url{https://doi.org/10.1007/s00382-019-04673-9}
 }
 \examples{
+#--------------------------------------------------------
+# Example 1: Figure 6 (right) from Sáenz et al. (2020)
+#--------------------------------------------------------
+
 # Load the data
 data("WRF")
 
-#Parameters
+# Parameters
 Uxlim=c(60,110)
 Uylim=c(0,50)
 Uxlab<-"Qx (kg/m/s)"
@@ -57,16 +61,18 @@ mod3<-mod[nmod3,][isOK,]
 
 mod<-rbind(mod1,mod2,mod3)
 
-#Index
+# Index
 sIWRF=SailoR.Indices(ref,mod)
 
-#Index table
+# Index table
 sIWRF.table<-SailoR.Table(sIWRF)
 
-#Save plot
-SailoR.Plot(ref,mod,ColourList=NULL,sfactor,docenter=TRUE,
+# plot
+      
+SailoR.Plot(ref, mod, ColourList=NULL, sfactor, docenter=TRUE,
             Uxlim, Uylim, Uxlab, Uylab, plotmain, plotlegend=TRUE,
-            plotRMSElegend=TRUE, RMSE_legend_Rounding=0,
-            RMSE_legend_units = " kg/m/s", referenceName="Sounding")
+            plotRMSElegend=TRUE, plotscalelegend=TRUE,
+            RMSE_legend_Rounding=0, RMSE_legend_units = " kg/m/s",
+            referenceName="Sounding")
 }
 \keyword{Datasets}

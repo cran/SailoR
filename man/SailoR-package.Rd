@@ -17,16 +17,21 @@ Maintainer: Santos J. González-Rojí <santosjose.gonzalez@ehu.eus>
 \keyword{ Package }
 
 \references{
-J. Sáenz, S. Carreno-Madinabeitia, G. Esnaola, S.J. González-Rojí, G. Ibarra-Berastegi and A. Ulazia (2018) The Sailor diagram. An extension of Taylor's diagram to two-dimensional vector data. In Preparation.}
+J. Sáenz, S. Carreno-Madinabeitia, G. Esnaola, S.J. González-Rojí, G. Ibarra-Berastegi and A. Ulazia (2020). The Sailor diagram - A new diagram for the verification of two-dimensional vector data from multiple models. Geoscientific Model Development, 13(7), 3221-3240. doi: \url{https://doi.org/10.5194/gmd-13-3221-2020}.
+}
 
 \seealso{
  \code{\link{UVError}}
 }
 \examples{
+#--------------------------------------------------------
+# Example 1: Figure 5 (left) from Sáenz et al. (2020)
+#--------------------------------------------------------
+
 # Load the data
 data(Dragonera)
 
-#Parameters
+# Parameters
 Uxlim=c(-10,10)
 Uylim=c(-10,10)
 Uxlab<-"U (m/s)"
@@ -36,12 +41,21 @@ sfactor<-1
 ref<-Dragonera[["ref"]]
 mod<-Dragonera[["mod"]]
     
-#Index
+# Index
 SailoR.Indices(ref,mod)
-    
-SailoR.Plot(ref, mod, ColourList=NULL, sfactor, docenter=FALSE,
-            Uxlim, Uylim, Uxlab, Uylab, plotmain, plotlegend=TRUE,
-            plotRMSElegend=TRUE, RMSE_legend_Rounding=1, 
-            RMSE_legend_units=" m/s", referenceName="Reference")
-  
+
+# Plot    
+p <- SailoR.Plot(ref,mod,ColourList=NULL,sfactor,docenter=TRUE,
+                 Uxlim,Uylim,Uxlab,Uylab,plotmain,plotlegend=TRUE,
+                 plotRMSElegend=TRUE,
+                 plotscalelegend=TRUE,
+                 RMSE_legend_Rounding=1,RMSE_legend_units = " m/s",
+                 referenceName="Reference")
+
+#Add segments
+segments(-1,-1, x1 = -1, y1 = 1,col="brown",lwd=4)
+segments(-1,-1, x1 = 1, y1 = -1,col="brown",lwd=4)
+segments(1,-1, x1 = 1, y1 = 1,col="brown",lwd=4)
+segments(1,1, x1 = -1, y1 = 1,col="brown",lwd=4)
+
   }

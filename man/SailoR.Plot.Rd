@@ -8,11 +8,12 @@ Sailor Diagram
 This function generates the Sailor diagram. It calls \code{SailoR.Indices()} internally. 
 }
 \usage{
-SailoR.Plot(ref, mod, ColourList = NULL, sfactor = 1, docenter = FALSE, xlim = NULL, 
-ylim = NULL, xlab = NULL, 
-ylab = NULL, plotmain = NULL, plotlegend = TRUE, 
-plotRMSElegend = TRUE, Ensembles = FALSE, RMSE_legend_units = "", 
-RMSE_legend_Rounding = 2, referenceName = NULL)
+SailoR.Plot(ref, mod, ColourList = NULL, sfactor = 1, docenter = FALSE, 
+xlim = NULL, ylim = NULL, xlab = NULL, ylab = NULL, 
+plotmain = NULL, plotlegend = TRUE, plotRMSElegend = TRUE, 
+plotscalelegend=TRUE, Ensembles = FALSE, RMSE_legend_units = "", 
+RMSE_legend_Rounding = 2, referenceName = NULL,
+linestype = NULL, bias_pch = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -23,7 +24,7 @@ a data frame with the reference observations. It should have 3 columns: name, zo
 a data frame with the model data. It should have 3 columns: name, zonal component and meridional component. More than one model can be included by using different names. 
 }
   \item{ColourList}{
-a vector with all the colors you want to use for plotting the models. Grey will always be used for reference data. If \code{NULL}, the default colours are used: c("darkgrey", "red", "blue", "darkolivegreen3", "orange", "seagreen3", "gold", "purple", "pink").}
+a vector with all the colors you want to use for plotting the models. Darkgray will always be used for reference data. If \code{NULL}, the default colours are used: c("gray40", "red", "blue", "darkolivegreen3", "orange", "seagreen3", "gold", "purple", "pink").}
   \item{sfactor}{
 a value with the scale factor to be applied to the ellipses of each model.}
   \item{docenter}{
@@ -49,6 +50,9 @@ if a default legend should be added to the plot, this argument should be \code{T
   \item{plotRMSElegend}{
 if a legend with a summary of the RMSE values should be added to the plot, this argument should be \code{TRUE}.
 }
+  \item{plotscalelegend}{
+if a legend with the scaled factor should be added to the plot, this argument should be \code{TRUE}.
+}
   \item{Ensembles}{
 if \code{Ensembles} is set to \code{TRUE}, M different models included in the data frame \code{mod} will be taken as a single model and the reference model is repeated M times for the calculation of the Sailor diagram.
 }
@@ -61,6 +65,12 @@ number of decimals to be kept in the RMSE legend.
   \item{referenceName}{
 external name provided for the reference dataset for the legend.
 }
+  \item{linestype}{
+a vector with the lines types for the model data. The "dashed" option is reserved for the reference. The other options are "solid", "dotted", "dotdash", "longdash" or "twodash".
+}
+  \item{bias_pch}{
+a vector with the pch types for the bias symbol. The default opcion provides a circle when docenter is TRUE and a point when it is FALSE.
+}
 }
 \value{
 The result is a plot object.
@@ -69,10 +79,14 @@ The result is a plot object.
  \code{\link{SailoR.Indices}}
 }
 \examples{
+#--------------------------------------------------------
+# Example 1: Figure 6 (right) from Sáenz et al. (2020)
+#--------------------------------------------------------
+
 # Load the Vertically Integrated Water Vapor Transport Data included in the package
 data(WRF)
 
-#Parameters
+# Parameters
 Uxlim=c(60,110)
 Uylim=c(0,50)
 Uxlab<-"Qx (kg/m/s)"
@@ -95,17 +109,18 @@ mod3<-mod[nmod3,][isOK,]
 
 mod<-rbind(mod1,mod2,mod3)
 
-#Index
+# Index
 sIWRF=SailoR.Indices(ref,mod)
 
-#Index table
+# Index table
 sIWRF.table<-SailoR.Table(sIWRF)
 
-#Save plot
+# Plot
 SailoR.Plot(ref,mod,ColourList=NULL,sfactor,docenter=TRUE,
             Uxlim, Uylim, Uxlab, Uylab, plotmain, plotlegend=TRUE,
             plotRMSElegend=TRUE, RMSE_legend_Rounding=0,
-            RMSE_legend_units=" kg/m/s", referenceName="Sounding")
+            RMSE_legend_units=" kg/m/s", referenceName="Sounding",
+            ,linestype=c("solid", "dotted", "twodash"))
   }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
