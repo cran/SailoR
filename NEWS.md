@@ -17,3 +17,8 @@
 * The Ensembles dataset and its manual page were updated: A new model was added to it. 
 
 * A new example was added to SailoR.Table(). This new example shows how to generate the table in LaTeX.
+
+# Version 1.2
+
+* All users should update their SailoR package to this new version. A bug affecting ONLY the estimations of the RMSE values has been solved. The rest of the terms in the indices and output from the UVError function were correct. Thanks to Kwun Yip (Samuel) Fung for reporting us about it. 
+

@@ -25,11 +25,11 @@ function(U,V,Ensembles=FALSE){
   #$thetavu: Rotation angle from U EOFs to V EOFs
   #$RMSE: Rootmean square error between U and V
   #$Rvc2: vector correlation squared in 2D.(Breaker, Gemmill, Crossby, 1994, J. App. Met.)
+  #doi: https://doi.org/10.1175/1520-0450(1994)033<1354:TAOATF>2.0.CO;2
+  #following R vector correlation squared from CCA (Crossby et. al 1993, J. Atmos. Ocean. Tech. vol10)
   #$EccentricityU: eccentricity of the ellipses from the reference dataset
   #$EccentricityV: eccentricity of the ellipses from the model dataset
   #$congruenceEOF: Congruence coefficient (absolute value) for EOF1
-  #doi: https://doi.org/10.1175/1520-0450(1994)033<1354:TAOATF>2.0.CO;2
-  #following R vector correlation squared from CCA (Crossby et. al 1993, J. Atmos. Ocean. Tech. vol10)
   
   #If Ensembles = TRUE, n differents models (from mod)
   #are taken as a single model and the reference model is repeated n times.
@@ -96,40 +96,49 @@ function(U,V,Ensembles=FALSE){
   Ev=pcaV$rotation
   # Angles with zonal axis
   thetau=atan2(Eu[2,1],Eu[1,1])
-  Ru=matrix(c(cos(thetau),sin(thetau),-sin(thetau),cos(thetau)),nrow=2)
+  # This is not needed There is a potential future problem with this
+  # definition. In the equations we assume a relation between eof1 and eof2
+  # so that eof2 is orthogonal to eof1 and we advance from eof1 to eof2
+  # in the positive direction of the angle theta
+  # BUT LAPACK routines do not ensure that, so better not to define
+  # Ru this way
+  # The right way would be
+  # Eu=Ru%*%Identity, thus Ru=Eu, but ths is not needed, so, we remove it
+  # Ru=matrix(c(cos(thetau),sin(thetau),-sin(thetau),cos(thetau)),nrow=2)
   thetav=atan2(Ev[2,1],Ev[1,1])
-  Rv=matrix(c(cos(thetav),sin(thetav),-sin(thetav),cos(thetav)),nrow=2)
+  # See above, unneeded but risky, do NOT use it or, if needed,
+  # Rv=Ev
+  # Rv=matrix(c(cos(thetav),sin(thetav),-sin(thetav),cos(thetav)),nrow=2)
   # Congruence coefficient
   e1u=Eu[,1]
   e1v=Ev[,1]
   congruenceEOF=abs(sum(e1u*e1v))
 
-  # Rotation matrix
+  # Rotation matrix.
+  # This is a safe way of defining it (see comment in Ru above) and ensures
+  # that equation (17) in the paper is true for any relative orientation of
+  # eofs 1 and 2 
   Rvu=Ev%*%t(Eu)
+  # This is also true if we focus on the relative orientation
+  # between eof1(U) and eof1(V)
   thetavu=atan2(Rvu[2,1],Rvu[1,1])
+  
   # Error matrix
-  # Bias "fixed" part
-  biasVU=muV-muU
-  Bvusq=t(biasVU)%*%biasVU
+  # Reworked using original data
+  # Safe way to program the MSE, equation 21 in the paper
+  DeltaUV<-function(A,B){
+	N=nrow(A)
+  	return(t(as.matrix(A-B))%*%as.matrix(A-B)/N)
+  }
   
-  # Variance/covariance terms
-  DvuU=Eu%*%Sigmau%*%Sigmau%*%t(Eu)
-  DvuV=Ev%*%Sigmav%*%Sigmav%*%t(Ev)
-  # Checked, they are the same if rotation Rvu is used
-  # DvuV2=Rvu%*%Eu%*%Sigmav%*%Sigmav%*%t(Eu)%*%t(Rvu)
-  # DvuV
-  # DvuV2
-  # DvuV-DvuV2
-  # The covariance negative terms
-  DvuNeg=Eu%*%t(Pu)%*%Pv%*%t(Ev)+Ev%*%t(Pv)%*%Pu%*%t(Eu)
+  # The frobenius norm of the error matrix in (21), so, eq (22)
+  MSEError<-function(A,B){
+	return(norm(DeltaUV(A,B),type="f"))
+  }
+
+  MSE=MSEError(U,V)
   
-  # Now, get the error matrix
-  DeltaSq=(Bvusq+(DvuU+DvuV-DvuNeg))/N
-  
-  # First srqt because after diagonalizing M^2 we need its sqrt 
-  # (Frobenius norm)
-  MSE=sqrt(sum(diag(DeltaSq%*%t(DeltaSq))))
-  # Second one, from MSE to RMSE
+  # From MSE to RMSE
   RMSE=sqrt(MSE)
   
   #$Rvc2: R vector correlation squared from CCA 
